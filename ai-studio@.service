@@ -1,0 +1,17 @@
+[Unit]
+Description=AI Studio Server
+After=network.target
+
+[Service]
+Type=simple
+User=%i
+WorkingDirectory=/home/%i/ai-studio/backend
+EnvironmentFile=/home/%i/ai-studio/.env
+ExecStart=/usr/bin/python3 /home/%i/ai-studio/backend/server.py
+Restart=on-failure
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

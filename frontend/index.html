@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;1,9..144,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<div id="sidebar-overlay" onclick="closeSidebar()"></div>
+<div id="app">
+
+  <!-- ══ SIDEBAR ══ -->
+  <aside id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">AI <span>Studio</span></div>
+    </div>
+
+    <button class="new-chat-btn" onclick="newChat()">
+      <i class="ti ti-plus"></i>
+      New Chat
+    </button>
+
+    <div class="sidebar-section" id="chat-list">
+      <!-- populated by JS -->
+    </div>
+  </aside>
+
+  <!-- ══ MAIN ══ -->
+  <main id="main">
+
+    <!-- Topbar -->
+    <div id="topbar">
+      <button class="topbar-toggle" onclick="toggleSidebar()" aria-label="Toggle sidebar">
+        <i class="ti ti-menu-2"></i>
+      </button>
+
+      <div class="topbar-title" id="topbar-title">New Chat</div>
+
+      <!-- Model selector -->
+      <div class="model-selector" id="model-selector">
+        <button class="model-btn" data-model="gemini-flash" onclick="selectModel(this)">Flash</button>
+        <button class="model-btn" data-model="gemini-thinking" onclick="selectModel(this)">Think</button>
+        <button class="model-btn" data-model="claude-sonnet" onclick="selectModel(this)">Sonnet</button>
+        <button class="model-btn active" data-model="claude-opus" onclick="selectModel(this)">Opus</button>
+      </div>
+    </div>
+
+    <!-- Chat messages -->
+    <div id="chat-wrap">
+      <div id="chat-messages">
+        <div id="welcome">
+          <div class="welcome-logo">AI <span>Studio</span></div>
+          <div class="welcome-sub">Gemini & Claude — powered by XAI voice</div>
+          <div class="welcome-models">
+            <div class="welcome-model-chip">Gemini Flash</div>
+            <div class="welcome-model-chip">Gemini Thinking</div>
+            <div class="welcome-model-chip">Claude Sonnet</div>
+            <div class="welcome-model-chip">Claude Opus</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Input area -->
+    <div id="input-area">
+      <div class="input-inner">
+        <div id="image-preview-strip"></div>
+        <textarea id="msg-input" placeholder="メッセージを入力…" id="msg-input-placeholder" rows="1"></textarea>
+        <div class="input-toolbar">
+          <button class="input-tool-btn" onclick="document.getElementById('file-input').click()" title="画像を添付">
+            <i class="ti ti-paperclip"></i>
+          </button>
+          <input type="file" id="file-input" accept="image/*" multiple style="display:none" onchange="handleImageFiles(this.files)">
+          <div class="input-spacer"></div>
+          <button class="send-btn" id="send-btn" onclick="sendMessage()" aria-label="送信">
+            <i class="ti ti-arrow-up"></i>
+          </button>
+        </div>
+      </div>
+      <div class="input-hint" id="input-hint">Shift+Enter で改行 · Enter で送信</div>
+    </div>
+
+  </main>
+</div>
+
+<!-- Global TTS bar -->
+<div id="global-tts-bar">
+  <i class="ti ti-volume"></i>
+  <span class="gtts-label">reading…</span>
+  <div class="tts-progress active" style="width:120px"><div class="tts-progress-inner"></div></div>
+  <button class="gtts-stop" onclick="stopTTS()"><i class="ti ti-player-stop"></i> 停止</button>
+</div>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<script src="/app.js"></script>
+</body>
+</html>
